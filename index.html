@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talia Daneshrad — Food & Hospitality Content Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────
+   TOKENS
+───────────────────────────────────── */
+:root {
+  --bg:          #FAFAF7;
+  --eggshell:    #f5efe4;
+  --white:       #ffffff;
+  --espresso:    #3c1f0c;
+  --basil:       #5a662b;
+  --eggplant:    #751a47;
+  --cotton:      #bac9d2;
+  --lime:        #b8d737;
+  --blueberry:   #204186;
+
+  --text:        #3c1f0c;
+  --text-mid:    rgba(60,31,12,0.62);
+  --text-soft:   rgba(60,31,12,0.38);
+  --border:      rgba(60,31,12,0.1);
+  --border-md:   rgba(60,31,12,0.18);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ─────────────────────────────────────
+   NAV / TAB BAR
+───────────────────────────────────── */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(250,250,247,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 52px;
+  height: 68px;
+}
+
+.site-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--espresso);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* Tab nav */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  height: 100%;
+}
+
+.tab-nav li { height: 100%; }
+
+.tab-btn {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 22px; right: 22px;
+  height: 2px;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.tab-btn:hover { color: var(--espresso); }
+
+.tab-btn.active { color: var(--espresso); font-weight: 500; }
+.tab-btn[data-tab="welcome"].active::after  { background: var(--eggplant); }
+.tab-btn[data-tab="about"].active::after    { background: var(--basil); }
+.tab-btn[data-tab="work"].active::after     { background: var(--blueberry); }
+.tab-btn[data-tab="cases"].active::after    { background: var(--espresso); }
+.tab-btn[data-tab="services"].active::after { background: var(--basil); }
+
+.header-cta {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--eggplant);
+  border: 1.5px solid var(--eggplant);
+  padding: 9px 22px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.header-cta:hover {
+  background: var(--eggplant);
+  color: var(--white);
+}
+
+/* ─────────────────────────────────────
+   TAB PANELS
+───────────────────────────────────── */
+.tab-panel {
+  display: none;
+  min-height: 100vh;
+  padding-top: 68px;
+}
+
+.tab-panel.active { display: block; }
+
+/* ─────────────────────────────────────
+   WELCOME TAB
+───────────────────────────────────── */
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 56px;
+  padding: 100px 52px 80px;
+  min-height: calc(100vh - 68px);
+}
+
+.hero-eyebrow {
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--basil);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background: var(--basil);
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.8rem, 6.2vw, 6.8rem);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--espresso);
+  margin-bottom: 30px;
+}
+
+.hero-name em {
+  font-style: italic;
+  color: var(--eggplant);
+}
+
+.hero-tagline {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.8;
+  max-width: 500px;
+  margin-bottom: 52px;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--espresso);
+  color: var(--eggshell);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 15px 36px;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.btn-primary:hover { background: var(--basil); }
+
+.btn-ghost {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-mid);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+
+.btn-ghost:hover { color: var(--espresso); }
+.btn-ghost::after { content: '→'; }
+
+/* Stats grid — each box its own palette color */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+
+.stat-box {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: filter 0.2s;
+}
+
+.stat-box:hover { filter: brightness(1.06); }
+
+.stat-box.s1 { background: var(--eggplant); }
+.stat-box.s2 { background: var(--basil); }
+.stat-box.s3 { background: var(--espresso); }
+.stat-box.s4 { background: var(--cotton); }
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--eggshell);
+}
+
+.stat-box.s4 .stat-number { color: var(--espresso); }
+
+.stat-number em {
+  font-style: normal;
+  font-size: 1.8rem;
+  opacity: 0.75;
+}
+
+.stat-label {
+  font-size: 0.63rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245,239,228,0.65);
+  line-height: 1.55;
+}
+
+.stat-box.s4 .stat-label { color: rgba(60,31,12,0.55); }
+
+/* Marquee */
+.marquee-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 15px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--eggshell);
+}
+
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 26s linear infinite;
+}
+
+.marquee-item {
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.marquee-dot {
+  color: var(--eggplant);
+  margin-right: 40px;
+  font-size: 0.55rem;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Specialties strip */
+.specialties {
+  padding: 72px 52px;
+  border-top: 1px solid var(--border);
+}
+
+.spec-label {
+  font-size: 0.63rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--basil);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spec-label::before {
+  content: '';
+  width: 20px;
+  height: 1.5px;
+  background: var(--basil);
+  display: block;
+}
+
+.spec-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.spec-tag {
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1.5px solid transparent;
+}
+
+.spec-tag.t-eggplant { background: rgba(117,26,71,0.08); color: var(--eggplant); border-color: rgba(117,26,71,0.2); }
+.spec-tag.t-basil    { background: rgba(90,102,43,0.08); color: var(--basil);    border-color: rgba(90,102,43,0.2); }
+.spec-tag.t-espresso { background: rgba(60,31,12,0.06);  color: var(--espresso); border-color: rgba(60,31,12,0.15); }
+.spec-tag.t-blue     { background: rgba(32,65,134,0.07); color: var(--blueberry);border-color: rgba(32,65,134,0.18); }
+.spec-tag.t-cotton   { background: var(--cotton); color: var(--espresso); border-color: var(--cotton); }
+
+/* Intro strip */
+.intro-strip {
+  background: var(--espresso);
+  padding: 80px 52px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.intro-strip-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  font-weight: 300;
+  color: var(--eggshell);
+  line-height: 1.15;
+}
+
+.intro-strip-heading em {
+  font-style: italic;
+  color: var(--cotton);
+}
+
+.intro-strip-text {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(245,239,228,0.6);
+}
+
+.intro-strip-text strong {
+  color: var(--eggshell);
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────
+   PLACEHOLDER TABS
+───────────────────────────────────── */
+.placeholder-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 68px);
+  padding: 80px 52px;
+  text-align: center;
+  gap: 24px;
+}
+
+.placeholder-tab.bg-basil    { background: var(--basil); }
+.placeholder-tab.bg-eggplant { background: var(--eggplant); }
+.placeholder-tab.bg-blueberry{ background: var(--blueberry); }
+.placeholder-tab.bg-espresso { background: var(--espresso); }
+.placeholder-tab.bg-cotton   { background: var(--cotton); }
+
+.placeholder-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(245,239,228,0.5);
+}
+
+.placeholder-tab.bg-cotton .placeholder-eyebrow { color: rgba(60,31,12,0.45); }
+
+.placeholder-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 300;
+  color: var(--eggshell);
+  line-height: 1.05;
+  max-width: 700px;
+}
+
+.placeholder-tab.bg-cotton .placeholder-heading { color: var(--espresso); }
+
+.placeholder-heading em {
+  font-style: italic;
+  opacity: 0.55;
+}
+
+.placeholder-sub {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: rgba(245,239,228,0.5);
+  max-width: 460px;
+}
+
+.placeholder-tab.bg-cotton .placeholder-sub { color: rgba(60,31,12,0.45); }
+
+.placeholder-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(245,239,228,0.2);
+  color: rgba(245,239,228,0.4);
+  margin-top: 8px;
+}
+
+.placeholder-tab.bg-cotton .placeholder-badge {
+  border-color: rgba(60,31,12,0.15);
+  color: rgba(60,31,12,0.38);
+}
+
+.placeholder-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/* Work sub-tabs */
+.work-subtab-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(245,239,228,0.15);
+  margin-bottom: 48px;
+}
+
+.work-subtab-btn {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,239,228,0.4);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 14px 28px;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.work-subtab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 28px; right: 28px;
+  height: 2px;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.work-subtab-btn.active { color: var(--eggshell); }
+.work-subtab-btn.active::after { background: var(--lime); }
+.work-subtab-btn:hover { color: var(--eggshell); }
+
+/* ─────────────────────────────────────
+   SERVICES TAB
+───────────────────────────────────── */
+.services-hero {
+  background: var(--basil);
+  padding: 80px 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+
+.services-hero-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 300;
+  color: var(--eggshell);
+  line-height: 1.05;
+}
+
+.services-hero-heading em {
+  font-style: italic;
+  color: var(--lime);
+}
+
+.services-hero-sub {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(245,239,228,0.6);
+  align-self: end;
+}
+
+.services-body {
+  padding: 80px 64px;
+}
+
+.offering-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  background: var(--border);
+  margin-top: 52px;
+}
+
+.offering-card {
+  background: var(--white);
+  padding: 44px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: background 0.2s;
+}
+
+.offering-card:hover { background: var(--eggshell); }
+
+.offering-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.offering-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--espresso);
+  line-height: 1.15;
+}
+
+.offering-desc {
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: var(--text-mid);
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  flex: 1;
+}
+
+.offering-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.offering-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 100px;
+  border: 1px solid var(--border-md);
+  color: var(--text-soft);
+}
+
+.services-how {
+  padding: 80px 64px;
+  background: var(--eggshell);
+  border-top: 1px solid var(--border);
+}
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  background: var(--border);
+  margin-top: 52px;
+}
+
+.how-step {
+  background: var(--white);
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.how-step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--border-md);
+}
+
+.how-step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--espresso);
+}
+
+.how-step-desc {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--text-mid);
+}
+
+.services-cta-strip {
+  background: var(--espresso);
+  padding: 80px 64px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.services-cta-strip h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3.8rem);
+  font-weight: 300;
+  color: var(--eggshell);
+  line-height: 1.1;
+}
+
+.services-cta-strip h3 em {
+  font-style: italic;
+  color: var(--cotton);
+}
+
+.services-cta-strip p {
+  font-size: 0.95rem;
+  color: rgba(245,239,228,0.5);
+  max-width: 420px;
+  line-height: 1.75;
+}
+
+@media (max-width: 960px) {
+  .services-hero { grid-template-columns: 1fr; gap: 32px; padding: 60px 24px; }
+  .services-body { padding: 48px 24px; }
+  .offering-grid { grid-template-columns: 1fr; }
+  .services-how { padding: 60px 24px; }
+  .how-steps { grid-template-columns: 1fr 1fr; }
+  .services-cta-strip { padding: 60px 24px; }
+}
+
+/* ─────────────────────────────────────
+   WORK TAB
+───────────────────────────────────── */
+
+.work-hero {
+  background: var(--eggshell);
+  padding: 80px 64px 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.work-hero-eyebrow {
+  font-size: 0.63rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.work-hero-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  font-weight: 300;
+  color: var(--espresso);
+  line-height: 1.05;
+}
+
+.work-hero-heading em {
+  font-style: italic;
+  color: var(--eggplant);
+}
+
+.work-grid-wrap {
+  padding: 28px 32px 64px;
+  background: var(--bg);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 140px;
+  grid-auto-flow: dense;
+  gap: 8px;
+}
+
+.work-item {
+  position: relative;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--eggshell);
+}
+
+.work-item img,
+.work-item video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.work-item.wide  { grid-column: span 2; grid-row: span 2; }
+.work-item.tall  { grid-column: span 1; grid-row: span 3; }
+.work-item.med   { grid-column: span 1; grid-row: span 2; }
+.work-item.small { grid-column: span 1; grid-row: span 1; }
+
+@media (max-width: 900px) {
+  .work-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .work-grid { grid-template-columns: repeat(2, 1fr); }
+  .work-hero { padding: 48px 28px 32px; }
+  .work-grid-wrap { padding: 20px 16px 48px; }
+}
+
+/* ─────────────────────────────────────
+   CASE STUDIES TAB
+───────────────────────────────────── */
+.cases-hero {
+  background: var(--espresso);
+  padding: 80px 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+
+.cases-hero-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 300;
+  color: var(--eggshell);
+  line-height: 1.05;
+}
+
+.cases-hero-heading em {
+  font-style: italic;
+  color: var(--cotton);
+}
+
+.cases-hero-sub {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(245,239,228,0.55);
+  align-self: end;
+}
+
+.cases-body {
+  padding: 80px 64px;
+}
+
+/* Case study cards */
+.case-study {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+
+.case-study.open { border-color: var(--border-md); }
+
+.cs-header {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 28px;
+  padding: 36px 40px;
+  cursor: pointer;
+  background: var(--eggshell);
+  transition: background 0.2s;
+}
+
+.case-study.open .cs-header { background: var(--white); border-bottom: 1px solid var(--border); }
+.cs-header:hover { background: var(--white); }
+
+.cs-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.case-study:nth-child(1) .cs-number { color: var(--eggplant); }
+.case-study:nth-child(2) .cs-number { color: var(--basil); }
+.case-study:nth-child(3) .cs-number { color: var(--blueberry); }
+
+.cs-logo {
+  height: 56px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.cs-logo-placeholder {
+  display: none;
+}
+
+.cs-client {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--espresso);
+  margin-bottom: 5px;
+}
+
+.cs-type {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.cs-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--text-soft);
+  transition: all 0.25s;
+  flex-shrink: 0;
+}
+
+.case-study.open .cs-toggle {
+  transform: rotate(45deg);
+  border-color: var(--espresso);
+  color: var(--espresso);
+}
+
+.cs-body {
+  display: none;
+  padding: 48px 40px;
+  background: var(--white);
+}
+
+.case-study.open .cs-body { display: block; }
+
+.cs-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 64px;
+}
+
+.cs-story-section { margin-bottom: 28px; }
+
+.cs-story-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--basil);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cs-story-label::before {
+  content: '';
+  width: 14px;
+  height: 1px;
+  background: var(--basil);
+  display: block;
+}
+
+.case-study:nth-child(2) .cs-story-label { color: var(--blueberry); }
+.case-study:nth-child(2) .cs-story-label::before { background: var(--blueberry); }
+.case-study:nth-child(3) .cs-story-label { color: var(--blueberry); }
+.case-study:nth-child(3) .cs-story-label::before { background: var(--blueberry); }
+
+.cs-story-text {
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--text-mid);
+}
+
+/* Metrics */
+.cs-metrics { align-self: start; }
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+
+.metric-row:first-child { border-top: 1px solid var(--border); }
+
+.metric-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--espresso);
+  white-space: nowrap;
+}
+
+.case-study:nth-child(1) .metric-value em {
+  font-style: normal;
+  color: var(--eggplant);
+}
+
+.case-study:nth-child(2) .metric-value em {
+  font-style: normal;
+  color: var(--basil);
+}
+
+.case-study:nth-child(3) .metric-value em {
+  font-style: normal;
+  color: var(--blueberry);
+}
+
+.metric-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  text-align: right;
+  line-height: 1.4;
+}
+
+@media (max-width: 960px) {
+  .cases-hero { grid-template-columns: 1fr; gap: 32px; padding: 60px 24px; }
+  .cases-body { padding: 48px 24px; }
+  .cs-header { padding: 28px 24px; gap: 16px; }
+  .cs-body { padding: 32px 24px; }
+  .cs-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ─────────────────────────────────────
+   ABOUT TAB
+───────────────────────────────────── */
+.about-hero {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  min-height: calc(100vh - 68px);
+}
+
+.about-photo-col {
+  position: relative;
+  background: var(--eggshell);
+  overflow: hidden;
+}
+
+.about-photo-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.about-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--eggshell);
+  color: var(--text-soft);
+  text-align: center;
+  padding: 40px;
+}
+
+.about-photo-placeholder .ph-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--border-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.about-photo-placeholder p {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.about-photo-placeholder code {
+  font-size: 0.65rem;
+  background: var(--border);
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: var(--espresso);
+  font-family: monospace;
+}
+
+.about-intro-col {
+  padding: 80px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.about-eyebrow {
+  font-size: 0.63rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--basil);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.about-eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 1.5px;
+  background: var(--basil);
+  display: block;
+}
+
+.about-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 4vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--espresso);
+  margin-bottom: 36px;
+}
+
+.about-headline em {
+  font-style: italic;
+  color: var(--eggplant);
+}
+
+.about-bio {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text-mid);
+  font-weight: 300;
+}
+
+.about-bio p + p { margin-top: 20px; }
+
+.about-bio strong {
+  color: var(--espresso);
+  font-weight: 500;
+}
+
+/* Differentiators */
+.differentiators {
+  padding: 96px 64px;
+  background: var(--eggshell);
+  border-top: 1px solid var(--border);
+}
+
+.diff-header {
+  margin-bottom: 56px;
+}
+
+.diff-header .section-label {
+  font-size: 0.63rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--basil);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.diff-header .section-label::before {
+  content: '';
+  width: 20px;
+  height: 1.5px;
+  background: var(--basil);
+  display: block;
+}
+
+.diff-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 3vw, 3.2rem);
+  font-weight: 300;
+  color: var(--espresso);
+  line-height: 1.1;
+}
+
+.diff-header h2 em {
+  font-style: italic;
+  color: var(--eggplant);
+}
+
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  background: var(--border);
+}
+
+.diff-card {
+  background: var(--white);
+  padding: 44px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: background 0.2s;
+}
+
+.diff-card:hover { background: var(--bg); }
+
+.diff-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.diff-card:nth-child(1) .diff-number { color: var(--eggplant); }
+.diff-card:nth-child(2) .diff-number { color: var(--basil); }
+.diff-card:nth-child(3) .diff-number { color: var(--blueberry); }
+
+.diff-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--espresso);
+  line-height: 1.2;
+}
+
+.diff-body {
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: var(--text-mid);
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+/* Credentials */
+.about-credentials-section {
+  padding: 96px 64px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.creds-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-top: 52px;
+}
+
+.creds-table {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cred-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+  transition: background 0.18s;
+}
+
+.cred-row:last-child { border-bottom: none; }
+.cred-row:hover { background: var(--eggshell); }
+
+.cred-title {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--espresso);
+}
+
+.cred-meta {
+  font-size: 0.68rem;
+  color: var(--text-soft);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.creds-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.creds-aside-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--espresso);
+  line-height: 1.45;
+  border-left: 2px solid var(--basil);
+  padding-left: 24px;
+}
+
+.creds-aside-body {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-mid);
+}
+
+.about-contact-strip {
+  background: var(--espresso);
+  padding: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.about-contact-strip h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+  font-weight: 300;
+  color: var(--eggshell);
+  line-height: 1.15;
+}
+
+.about-contact-strip h3 em {
+  font-style: italic;
+  color: var(--cotton);
+}
+
+.btn-light {
+  background: var(--eggshell);
+  color: var(--espresso);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 15px 36px;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s;
+  display: inline-block;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-light:hover { background: var(--cotton); }
+
+@media (max-width: 960px) {
+  .about-hero { grid-template-columns: 1fr; }
+  .about-photo-col { min-height: 420px; }
+  .about-intro-col { padding: 56px 24px; }
+  .differentiators { padding: 64px 24px; }
+  .diff-grid { grid-template-columns: 1fr; }
+  .about-credentials-section { padding: 64px 24px; }
+  .creds-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-contact-strip { flex-direction: column; padding: 48px 24px; text-align: center; }
+}
+
+/* ─────────────────────────────────────
+   FOOTER
+───────────────────────────────────── */
+.site-footer {
+  background: var(--espresso);
+  border-top: 1px solid rgba(245,239,228,0.08);
+  padding: 24px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,239,228,0.35);
+}
+
+.footer-copy {
+  font-size: 0.6rem;
+  color: rgba(245,239,228,0.25);
+  letter-spacing: 0.06em;
+}
+
+/* ─────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────── */
+@media (max-width: 960px) {
+  .header-inner { padding: 0 20px; }
+  .tab-btn { padding: 0 12px; font-size: 0.62rem; }
+  .header-cta { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 80px 24px 60px; min-height: auto; gap: 48px; }
+  .stat-grid { max-width: 100%; }
+  .specialties { padding: 52px 24px; }
+  .intro-strip { grid-template-columns: 1fr; gap: 32px; padding: 60px 24px; }
+  .site-footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px 24px; }
+}
+
+@media (max-width: 600px) {
+  .tab-nav { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     HEADER + TAB NAV
+════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="site-logo" onclick="switchTab('welcome'); return false;">Talia Daneshrad</a>
+
+    <nav>
+      <ul class="tab-nav">
+        <li><button class="tab-btn active" data-tab="welcome"  onclick="switchTab('welcome')">Welcome</button></li>
+        <li><button class="tab-btn"        data-tab="about"    onclick="switchTab('about')">About</button></li>
+        <li><button class="tab-btn"        data-tab="work"     onclick="switchTab('work')">Work</button></li>
+        <li><button class="tab-btn"        data-tab="cases"    onclick="switchTab('cases')">Case Studies</button></li>
+        <li><button class="tab-btn"        data-tab="services" onclick="switchTab('services')">Services</button></li>
+      </ul>
+    </nav>
+
+    <a href="mailto:taliacdaneshrad@gmail.com" class="header-cta">Let's Talk</a>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════
+     TAB 1 — WELCOME
+════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-welcome">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Food &amp; Hospitality · Content Strategy · NYC</div>
+      <h1 class="hero-name">Content that<br>makes people<br><em>show up.</em></h1>
+      <p class="hero-tagline">Short-form video and content strategy for food brands that are serious about growth. I build audiences, drive revenue, and make content people actually share.</p>
+      <div class="hero-cta-group">
+        <a href="mailto:taliacdaneshrad@gmail.com" class="btn-primary">Work With Me</a>
+        <button class="btn-ghost" onclick="switchTab('work')">See the work</button>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stat-grid">
+        <div class="stat-box s1">
+          <div class="stat-number">10.2<em>M</em></div>
+          <div class="stat-label">Total Impressions<br>Golden Steer NYC</div>
+        </div>
+        <div class="stat-box s2">
+          <div class="stat-number">14<em>K</em></div>
+          <div class="stat-label">Followers Built<br>From Zero</div>
+        </div>
+        <div class="stat-box s3">
+          <div class="stat-number">110<em>%</em></div>
+          <div class="stat-label">E-Commerce Growth<br>2-Week Campaign</div>
+        </div>
+        <div class="stat-box s4">
+          <div class="stat-number">100<em>+</em></div>
+          <div class="stat-label">Influencer Partnerships<br>Coordinated</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Short-Form Video</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Content Strategy</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Reels &amp; TikTok</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Influencer Marketing</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Brand Voice</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Campaign Strategy</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Content Calendars</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Community Building</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Short-Form Video</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Content Strategy</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Reels &amp; TikTok</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Influencer Marketing</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Brand Voice</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Campaign Strategy</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Content Calendars</span>
+      <span class="marquee-item"><span class="marquee-dot">✦</span>Community Building</span>
+    </div>
+  </div>
+
+  <!-- Specialties -->
+  <section class="specialties">
+    <div class="spec-label">What I Do</div>
+    <div class="spec-tags">
+      <span class="spec-tag t-eggplant">Content Creation</span>
+      <span class="spec-tag t-blue">Social Media Video</span>
+      <span class="spec-tag t-basil">Influencer Marketing</span>
+      <span class="spec-tag t-espresso">Brand Storytelling</span>
+      <span class="spec-tag t-cotton">Community Building</span>
+      <span class="spec-tag t-eggplant">Campaign Management</span>
+      <span class="spec-tag t-basil">UGC</span>
+      <span class="spec-tag t-blue">Recipe Creation</span>
+    </div>
+  </section>
+
+  <!-- Dark intro strip -->
+  <div class="intro-strip">
+    <div class="intro-strip-heading">
+      Strategy first.<br><em>Content second.</em>
+    </div>
+    <p class="intro-strip-text">
+      I work with <strong>restaurants, hospitality groups, and food CPG brands</strong> that know their product is exceptional and need their content to say the same. Every project starts with a strategy question — what does this brand need people to feel, do, or believe? The content follows from the answer.
+    </p>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-logo">Talia Daneshrad</div>
+    <div class="footer-copy">© 2026 · Food &amp; Hospitality Content Strategy · New York City</div>
+  </footer>
+
+</div><!-- /tab-welcome -->
+
+<!-- ═══════════════════════════════════
+     TAB 2 — ABOUT
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-about">
+
+  <!-- Hero: Photo + Intro -->
+  <div class="about-hero">
+    <div class="about-photo-col">
+      <!-- Save your photo as talia-headshot.jpg in the same folder as this file -->
+      <img src="talia-headshot.jpg" alt="Talia Daneshrad" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="about-photo-placeholder" style="display:none;">
+        <div class="ph-icon">📷</div>
+        <p>Add your photo to this folder<br>and name it:</p>
+        <code>talia-headshot.jpg</code>
+      </div>
+    </div>
+
+    <div class="about-intro-col">
+      <div class="about-eyebrow">About Me</div>
+      <h1 class="about-headline">Food strategist.<br>Storyteller.<br><em>Obsessed with food.</em></h1>
+      <div class="about-bio">
+        <p>I'm Talia — a content strategist and food storyteller based in New York City. I specialize in short-form video and social strategy for restaurants and food brands that know their product is exceptional and need their content to say the same.</p>
+        <p>Right now, I lead digital content for <strong>Golden Steer NYC</strong>, translating 65 years of steakhouse history into content that feels alive, culturally relevant, and worth sharing. Before that, I rebuilt <strong>Good Bird Restaurant's</strong> social presence in New Orleans — growing brand awareness by over 1,000% in two months from the ground up.</p>
+        <p>My foundation is a little different from most strategists in this space. I studied <strong>Marketing at Tulane University</strong>, where I graduated cum laude, and then went deeper — completing a <strong>Master's in Food Studies at NYU</strong>. I understand how people buy, and I understand food on a level that most marketers don't. This helps me shape my marketing strategy with a different eye.</p>
+        <p>Outside of client work, I stay sharp through running, reading, and cooking.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- What Makes Me Different -->
+  <section class="differentiators">
+    <div class="diff-header">
+      <div class="section-label">What Makes Me Different</div>
+      <h2>I don't just make content.<br><em>I think first.</em></h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-number">01</div>
+        <div class="diff-title">Strategy before the calendar</div>
+        <p class="diff-body">I push back before I post. Every project starts with a real question: what does this brand need people to feel, believe, or do? I won't build a content calendar until I can answer that — because content without strategy is just noise.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-number">02</div>
+        <div class="diff-title">Real food knowledge behind every piece</div>
+        <p class="diff-body">I have a Master's in Food Studies and a background in nutritional psychology. I understand the culture, the history, and the psychology of why people eat the way they eat. That depth shows up in every hook, every story, and every piece of content I create.</p>
+      </div>
+      <div class="diff-card">
+        <div class="diff-number">03</div>
+        <div class="diff-title">I won't compromise on brand fit</div>
+        <p class="diff-body">I won't chase a trending sound if it doesn't serve the brand. I won't post just to hit a quota. Every piece I create has a clear purpose tied to a real goal — and if it doesn't, I say so. That honesty is part of the work.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials -->
+  <section class="about-credentials-section">
+    <div class="section-label" style="font-size:0.63rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--basil); margin-bottom:16px; display:flex; align-items:center; gap:12px;">
+      <span style="display:block; width:20px; height:1.5px; background:var(--basil);"></span>
+      Background &amp; Credentials
+    </div>
+    <div class="creds-grid">
+      <div class="creds-table">
+        <div class="cred-row">
+          <span class="cred-title">M.S. Food Studies — NYU</span>
+          <span class="cred-meta">GPA 4.0 · 2025</span>
+        </div>
+        <div class="cred-row">
+          <span class="cred-title">B.S. Management &amp; Marketing — Tulane</span>
+          <span class="cred-meta">Cum Laude · 2023</span>
+        </div>
+        <div class="cred-row">
+          <span class="cred-title">Nutritional Psychology Certificate</span>
+          <span class="cred-meta">Center for Nutritional Psychology</span>
+        </div>
+        <div class="cred-row">
+          <span class="cred-title">edX Verified Certificate — Mental Health &amp; Nutrition</span>
+          <span class="cred-meta">edX</span>
+        </div>
+        <div class="cred-row">
+          <span class="cred-title">AI for Marketers — HubSpot</span>
+          <span class="cred-meta">Certified · 2025</span>
+        </div>
+      </div>
+
+      <div class="creds-aside">
+        <p class="creds-aside-quote">"At my core, I'm passionate about turning food into connection, creativity, and joy."</p>
+        <p class="creds-aside-body">I'm recognized for my curiosity, energy, and ability to think outside the box to bring bold creative ideas to life. I thrive when I'm creating — whether that means developing a brand's entire social voice from scratch or finding the one story angle that makes a 65-year-old steakhouse feel new again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Strip -->
+  <div class="about-contact-strip">
+    <h3>Like what you see?<br><em>Let's work together.</em></h3>
+    <a href="mailto:taliacdaneshrad@gmail.com" class="btn-light">Get In Touch</a>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-logo">Talia Daneshrad</div>
+    <div class="footer-copy">© 2026 · Food &amp; Hospitality Content Strategy · New York City</div>
+  </footer>
+
+</div><!-- /tab-about -->
+
+<!-- ═══════════════════════════════════
+     TAB 3 — WORK
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-work">
+
+  <div class="work-hero">
+    <div class="work-hero-eyebrow">
+      <span style="display:block; width:20px; height:1px; background:rgba(60,31,12,0.3);"></span>
+      Work
+    </div>
+    <h2 class="work-hero-heading">The work.<br><em>In full.</em></h2>
+  </div>
+
+  <div class="work-grid-wrap">
+    <div class="work-grid">
+
+      <div class="work-item wide">
+        <video src="gs-caesar.mp4" muted playsinline controls></video>
+      </div>
+      <div class="work-item tall">
+        <video src="gs-wet-aging.mp4" muted playsinline controls></video>
+      </div>
+      <div class="work-item med">
+        <img src="drinks-1.jpg" alt="">
+      </div>
+      <div class="work-item med">
+        <img src="drinks-2.jpg" alt="">
+      </div>
+      <div class="work-item med">
+        <img src="gb-sandwich.jpg" alt="">
+      </div>
+      <div class="work-item tall">
+        <video src="recipe-quinoa.mp4" muted playsinline controls></video>
+      </div>
+      <div class="work-item med">
+        <video src="gb-burrito.mp4" muted playsinline controls></video>
+      </div>
+      <div class="work-item small">
+        <img src="gb-salad.jpg" alt="">
+      </div>
+      <div class="work-item tall">
+        <video src="gs-ordering.mp4" muted playsinline controls></video>
+      </div>
+      <div class="work-item med">
+        <video src="recipe-eggs.mp4" muted playsinline controls></video>
+      </div>
+      <div class="work-item tall">
+        <img src="gs-letter.jpg" alt="">
+      </div>
+      <div class="work-item tall">
+        <img src="recipe-kale.jpg" alt="">
+      </div>
+      <div class="work-item wide">
+        <video src="recipe-amino.mp4" muted playsinline controls></video>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════
+     TAB 4 — CASE STUDIES
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-cases">
+
+  <!-- Hero -->
+  <div class="cases-hero">
+    <div>
+      <div style="font-size:0.63rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--cotton); margin-bottom:20px; display:flex; align-items:center; gap:12px;">
+        <span style="display:block; width:20px; height:1px; background:var(--cotton);"></span>
+        Case Studies
+      </div>
+      <h2 class="cases-hero-heading">Results that<br><em>speak first.</em></h2>
+    </div>
+    <p class="cases-hero-sub">Every project starts with a strategy question: what does this brand need people to feel, do, or believe? The content follows from the answer. Here's what that looks like in practice.</p>
+  </div>
+
+  <!-- Case Studies -->
+  <div class="cases-body">
+
+    <!-- CASE STUDY 1: GOLDEN STEER -->
+    <div class="case-study open" id="cs1">
+      <div class="cs-header" onclick="toggleCS('cs1')">
+        <div class="cs-number">01</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <img src="logo-golden-steer.png" alt="Golden Steer" class="cs-logo" onerror="this.style.display='none';">
+          <div class="cs-client" style="margin-bottom:0;">Golden Steer NYC</div>
+          <div class="cs-type">Restaurant Launch · Social Strategy · Short-Form Video · Influencer Marketing</div>
+        </div>
+        <div class="cs-toggle">+</div>
+      </div>
+      <div class="cs-body">
+        <div class="cs-grid">
+          <div class="cs-story">
+            <div class="cs-story-section">
+              <div class="cs-story-label">The Challenge</div>
+              <p class="cs-story-text">Golden Steer, a legendary Las Vegas steakhouse with 65 years of history, was opening its first NYC location. The brand had deep lore (Sinatra's booth, Marilyn's standing order) but zero New York presence. Zero followers. Zero content. Zero awareness in the market it needed to conquer. My job was to build the brand from scratch before the doors opened, and turn storytelling into foot traffic.</p>
+            </div>
+            <div class="cs-story-section">
+              <div class="cs-story-label">The Results</div>
+              <p class="cs-story-text">In 7 months: 10.2M impressions, 14,000+ followers built from zero, 109,000 total engagements, 1.95M video views, and 12,500+ shares.</p>
+            </div>
+          </div>
+          <div class="cs-metrics">
+            <div class="metric-row">
+              <div class="metric-value">10.2<em>M</em></div>
+              <div class="metric-label">Total Impressions</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">14<em>K</em></div>
+              <div class="metric-label">Followers From Zero</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">109<em>K</em></div>
+              <div class="metric-label">Total Engagements</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">1.95<em>M</em></div>
+              <div class="metric-label">Video Views</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">17.97<em>%</em></div>
+              <div class="metric-label">Top Post Engagement Rate</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">110<em>%</em></div>
+              <div class="metric-label">E-Commerce Growth</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">100<em>+</em></div>
+              <div class="metric-label">Creator Partnerships</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE STUDY 2: GOOD BIRD -->
+    <div class="case-study" id="cs2">
+      <div class="cs-header" onclick="toggleCS('cs2')">
+        <img src="logo-good-bird.png" alt="Good Bird" style="height:56px; width:56px; object-fit:contain;" onerror="this.outerHTML='<div class=\'cs-number\' style=\'color:var(--basil)\'>02</div>';">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div class="cs-client" style="margin-bottom:0;">Good Bird Restaurant</div>
+          <div class="cs-type">Restaurant · Social Rebuild · Content Production · Influencer Outreach</div>
+        </div>
+        <div class="cs-toggle">+</div>
+      </div>
+      <div class="cs-body">
+        <div class="cs-grid">
+          <div class="cs-story">
+            <div class="cs-story-section">
+              <div class="cs-story-label">The Challenge</div>
+              <p class="cs-story-text">Good Bird was a New Orleans restaurant with a strong in-room experience and a flat online presence. Their social channels weren't reflecting what made the place worth visiting and in a city where food culture is its own religion, that's a competitive liability.</p>
+            </div>
+            <div class="cs-story-section">
+              <div class="cs-story-label">The Approach</div>
+              <p class="cs-story-text">I rebuilt their social presence from the ground up, original food photography, short-form video content, and a brand voice that matched Good Bird's energy: warm, local, unpretentious, proud. I implemented a seasonal menu campaign strategy and launched a local food creator outreach program to build grassroots awareness.</p>
+            </div>
+            <div class="cs-story-section">
+              <div class="cs-story-label">The Results</div>
+              <p class="cs-story-text">Within the first two months: brand awareness grew by +1,019% and total followers grew 200+. The content strategy shifted the account from dormant to driving real-world discovery and reservations.</p>
+            </div>
+          </div>
+          <div class="cs-metrics">
+            <div class="metric-row">
+              <div class="metric-value">+1,019<em>%</em></div>
+              <div class="metric-label">Brand Awareness Growth</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">200<em>+</em></div>
+              <div class="metric-label">New Followers in 2 Months</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">78<em>%</em></div>
+              <div class="metric-label">Sales Increase from In-Person Activations</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">0<em> → Active</em></div>
+              <div class="metric-label">Influencer Program Built</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">2<em> mo</em></div>
+              <div class="metric-label">Time to Results</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE STUDY 3: GOLDEN STEER SEASONINGS -->
+    <div class="case-study" id="cs3">
+      <div class="cs-header" onclick="toggleCS('cs3')">
+        <div class="cs-number">03</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div class="cs-client" style="margin-bottom:0;">Golden Steer Seasonings</div>
+          <div class="cs-type">CPG · E-Commerce · UGC Strategy · Influencer Marketing · Paid Social</div>
+        </div>
+        <div class="cs-toggle">+</div>
+      </div>
+      <div class="cs-body">
+        <div class="cs-grid">
+          <div class="cs-story">
+            <div class="cs-story-section">
+              <div class="cs-story-label">The Challenge</div>
+              <p class="cs-story-text">Golden Steer has a robust ecommerce line focused on seasonings, steaks, and butters — a product backed by 65 years of steakhouse credibility. But the marketing wasn't matching the quality of what was being created. There was no cohesive content strategy, no established visual identity for the product line, or a content strategy to move people along the awareness funnel. The business needed content that would align with the overall brand and would both stop the scroll and convert.</p>
+            </div>
+            <div class="cs-story-section">
+              <div class="cs-story-label">The Results</div>
+              <p class="cs-story-text">Over 5 months, built a full content ecosystem for the seasoning line. Helped run a recurring creator program with 20–30 influencers per month — 200+ creator touchpoints total — generating a consistent pipeline of authentic, brand-aligned organic and UGC content. Sourced and managed product seeding end-to-end. Turned top-performing UGC into targeted Facebook ad creative, developing individual ad videos for each seasoning SKU. Shot original product photography to anchor the visual identity. Aligned all content with the broader Golden Steer brand aesthetic, creating a cohesive look and feel across organic and paid.</p>
+            </div>
+          </div>
+          <div class="cs-metrics">
+            <div class="metric-row">
+              <div class="metric-value">200<em>+</em></div>
+              <div class="metric-label">Creator Touchpoints Over 5 Months</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">20–30<em></em></div>
+              <div class="metric-label">Influencers Activated Monthly</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-value">5<em>+</em></div>
+              <div class="metric-label">Campaigns Created on TikTok Shop</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cases-body -->
+
+  <footer class="site-footer">
+    <div class="footer-logo">Talia Daneshrad</div>
+    <div class="footer-copy">© 2026 · Food &amp; Hospitality Content Strategy · New York City</div>
+  </footer>
+
+</div><!-- /tab-cases -->
+
+<!-- ═══════════════════════════════════
+     TAB 5 — SERVICES
+════════════════════════════════════ -->
+<div class="tab-panel" id="tab-services">
+
+  <!-- Hero -->
+  <div class="services-hero">
+    <div>
+      <div style="font-size:0.63rem; letter-spacing:0.28em; text-transform:uppercase; color:rgba(245,239,228,0.5); margin-bottom:20px; display:flex; align-items:center; gap:12px;">
+        <span style="display:block; width:20px; height:1px; background:rgba(245,239,228,0.4);"></span>
+        Services
+      </div>
+      <h2 class="services-hero-heading">What I do,<br><em>and how I do it.</em></h2>
+    </div>
+    <p class="services-hero-sub">I work with a focused number of clients at a time so every brand gets real strategy, attention, and creative energy. Every engagement starts with a kickoff session and a clear plan before any content is made.</p>
+  </div>
+
+  <!-- Core Offerings -->
+  <div class="services-body">
+    <div style="font-size:0.63rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--basil); display:flex; align-items:center; gap:12px;">
+      <span style="display:block; width:20px; height:1.5px; background:var(--basil);"></span>
+      Core Offerings
+    </div>
+    <div class="offering-grid">
+
+      <div class="offering-card">
+        <div class="offering-icon">🎬</div>
+        <div class="offering-title">Short-Form Video Strategy &amp; Production</div>
+        <p class="offering-desc">From concept to script to final edit direction — I build the short-form video strategy that actually grows accounts. Reels, TikToks, and platform-native content that's made to be watched, shared, and remembered.</p>
+        <div class="offering-tags">
+          <span class="offering-tag">Reels</span>
+          <span class="offering-tag">TikTok</span>
+          <span class="offering-tag">Scripting</span>
+          <span class="offering-tag">Creative Direction</span>
+        </div>
+      </div>
+
+      <div class="offering-card">
+        <div class="offering-icon">📋</div>
+        <div class="offering-title">Content Strategy &amp; Editorial Planning</div>
+        <p class="offering-desc">A content calendar without a strategy is just a schedule. I build the strategy first — content pillars, messaging, voice, cadence — and the calendar follows. Every post has a reason to exist.</p>
+        <div class="offering-tags">
+          <span class="offering-tag">Content Pillars</span>
+          <span class="offering-tag">Brand Voice</span>
+          <span class="offering-tag">Editorial Calendar</span>
+          <span class="offering-tag">Copywriting</span>
+        </div>
+      </div>
+
+      <div class="offering-card">
+        <div class="offering-icon">🤝</div>
+        <div class="offering-title">Influencer &amp; Creator Partnerships</div>
+        <p class="offering-desc">I identify, vet, reach out to, and coordinate creators who actually fit the brand — not just anyone with a following. I've managed 100+ creator partnerships across restaurant launches and ongoing campaigns.</p>
+        <div class="offering-tags">
+          <span class="offering-tag">Sourcing</span>
+          <span class="offering-tag">Outreach</span>
+          <span class="offering-tag">Coordination</span>
+          <span class="offering-tag">Activations</span>
+        </div>
+      </div>
+
+      <div class="offering-card">
+        <div class="offering-icon">🚀</div>
+        <div class="offering-title">Campaign Strategy &amp; Execution</div>
+        <p class="offering-desc">Launches, promos, seasonal pushes, e-commerce campaigns — I build the campaign from the brief to the last post, including content, creator coordination, and performance tracking.</p>
+        <div class="offering-tags">
+          <span class="offering-tag">Launch Campaigns</span>
+          <span class="offering-tag">E-Commerce</span>
+          <span class="offering-tag">Promotions</span>
+          <span class="offering-tag">Reporting</span>
+        </div>
+      </div>
+
+      <div class="offering-card">
+        <div class="offering-icon">📸</div>
+        <div class="offering-title">Brand Storytelling &amp; Visual Identity</div>
+        <p class="offering-desc">I help brands figure out what they actually want to say and how they want to look online — voice, aesthetic, tone, visual direction. The foundation that makes everything else consistent and recognizable.</p>
+        <div class="offering-tags">
+          <span class="offering-tag">Brand Voice</span>
+          <span class="offering-tag">Visual Direction</span>
+          <span class="offering-tag">Storytelling</span>
+          <span class="offering-tag">Positioning</span>
+        </div>
+      </div>
+
+      <div class="offering-card">
+        <div class="offering-icon">📊</div>
+        <div class="offering-title">Performance Reporting &amp; Insights</div>
+        <p class="offering-desc">Numbers matter, but only if you know what to do with them. I deliver clear, actionable performance reports that connect content decisions to real outcomes — and tell you what to do next.</p>
+        <div class="offering-tags">
+          <span class="offering-tag">Analytics</span>
+          <span class="offering-tag">Monthly Reports</span>
+          <span class="offering-tag">Strategy Pivots</span>
+          <span class="offering-tag">Growth Tracking</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- How I Work -->
+  <div class="services-how">
+    <div style="font-size:0.63rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--basil); display:flex; align-items:center; gap:12px;">
+      <span style="display:block; width:20px; height:1.5px; background:var(--basil);"></span>
+      How I Work
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <div class="how-step-title">Strategy Session</div>
+        <p class="how-step-desc">We start with a deep dive into your brand, goals, audience, and competitors. I ask a lot of questions before I make anything.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <div class="how-step-title">30-Day Content Plan</div>
+        <p class="how-step-desc">Before we hit publish, you get a full content plan — pillars, calendar, voice guide, and the strategy behind every decision.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <div class="how-step-title">Creation &amp; Execution</div>
+        <p class="how-step-desc">Content goes out on time, on brand, and with purpose. I handle the creative direction and coordination so you don't have to.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <div class="how-step-title">Report &amp; Refine</div>
+        <p class="how-step-desc">Regular performance reports with clear takeaways. What's working, what's not, and what we're adjusting — always moving forward.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="services-cta-strip">
+    <h3>Ready to talk about<br><em>what your brand needs?</em></h3>
+    <p>I work with a small number of clients at a time. Reach out and let's figure out if we're the right fit.</p>
+    <a href="mailto:taliacdaneshrad@gmail.com" class="btn-light">Get In Touch</a>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-logo">Talia Daneshrad</div>
+    <div class="footer-copy">© 2026 · Food &amp; Hospitality Content Strategy · New York City</div>
+  </footer>
+
+</div><!-- /tab-services -->
+
+<!-- ═══════════════════════════════════
+     JS
+════════════════════════════════════ -->
+<script>
+  function switchTab(name) {
+    // Hide all panels
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    // Deactivate all buttons
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+    // Show target panel
+    const panel = document.getElementById('tab-' + name);
+    if (panel) panel.classList.add('active');
+
+    // Activate button
+    const btn = document.querySelector('.tab-btn[data-tab="' + name + '"]');
+    if (btn) btn.classList.add('active');
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleCS(id) {
+    const el = document.getElementById(id);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.case-study').forEach(cs => cs.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+</script>
+
+</body>
+</html>
