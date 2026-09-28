@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eat With Quinn R008</title>
+<style>
+  :root { --bg:#1d1a18; --panel:#2a2623; --ink:#f4efe9; --muted:#b8aea5; --accent:#e9b54a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.4 system-ui, sans-serif; display:flex; flex-direction:column; align-items:center; gap:12px; padding:16px; min-height:100vh; }
+  .stage { position:relative; height:calc(100vh - 190px); min-height:420px; aspect-ratio:9/16; max-width:100%; }
+  canvas { width:100%; height:100%; display:block; border-radius:10px; box-shadow:0 10px 40px rgba(0,0,0,.5); background:#f4f1ec; }
+  .safe { position:absolute; left:0; right:0; background:rgba(230,60,60,.22); pointer-events:none; display:none; font-size:11px; color:#fff; padding:4px 8px; }
+  .safe.top { top:0; height:calc(250/1920*100%); border-radius:10px 10px 0 0; }
+  .safe.bot { bottom:0; height:calc(400/1920*100%); border-radius:0 0 10px 10px; display:none; align-items:flex-end; }
+  .show-safe .safe { display:flex; }
+  .bar { width:min(720px,100%); background:var(--panel); border-radius:12px; padding:10px 12px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  button { background:#3a3531; color:var(--ink); border:0; border-radius:8px; padding:7px 11px; font:inherit; cursor:pointer; }
+  button:hover { background:#4a443f; }
+  button.on { background:var(--accent); color:#1d1a18; }
+  input[type=range] { flex:1 1 100%; accent-color:var(--accent); }
+  .readout { font-variant-numeric:tabular-nums; color:var(--muted); margin-left:auto; }
+  .readout b { color:var(--ink); }
+  .hint { color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <canvas id="cv" width="1080" height="1920"></canvas>
+  <div class="safe top">Instagram UI (top 250 px)</div>
+  <div class="safe bot">Instagram UI (bottom 400 px)</div>
+</div>
+<div class="bar">
+  <input id="scrub" type="range" min="0" max="486" value="0" step="1" aria-label="Frame scrubber">
+  <button id="play">Play</button>
+  <button id="prev" title="Previous frame (Left)">&#9664; 1</button>
+  <button id="next" title="Next frame (Right)">1 &#9654;</button>
+  <button id="cap" class="on">Captions</button>
+  <button id="safe">Safe zones</button>
+  <button id="png">Save PNG</button>
+  <button id="rec">Export WebM</button>
+  <span class="readout" id="ro"></span>
+</div>
+<div class="hint">Space play/pause · Left/Right step 1 frame · Shift+Left/Right step 10 · Home to frame 0</div>
+<script type="module">
+/*__DRAW__*/
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const $ = id => document.getElementById(id);
+let frame = 0, playing = false, t0 = 0, f0 = 0, captions = true, recording = false;
+function render() {
+  drawFrame(ctx, frame, { captions });
+  $('scrub').value = frame;
+  const s = shotAt(frame);
+  $('ro').innerHTML = `Frame <b>${String(frame).padStart(3,'0')}</b> / ${TOTAL - 1} · <b>${(frame / FPS).toFixed(2)} s</b> · <b>${s.id}</b> (${s.a}-${s.b}) · Set ${s.set}`;
+}
+function setFrame(f) { frame = ((f % TOTAL) + TOTAL) % TOTAL; render(); }
+function play(on) {
+  playing = on; $('play').textContent = on ? 'Pause' : 'Play'; $('play').classList.toggle('on', on);
+  if (on) { t0 = performance.now(); f0 = frame; }
+}
+function tick(now) {
+  if (playing) {
+    const f = (f0 + Math.floor((now - t0) * FPS / 1000)) % TOTAL; // hard loop back to frame 0
+    if (f !== frame) { frame = f; render(); }
+  }
+  requestAnimationFrame(tick);
+}
+$('play').onclick = () => play(!playing);
+$('prev').onclick = () => { play(false); setFrame(frame - 1); };
+$('next').onclick = () => { play(false); setFrame(frame + 1); };
+$('scrub').oninput = e => { play(false); setFrame(+e.target.value); };
+$('cap').onclick = () => { captions = !captions; $('cap').classList.toggle('on', captions); render(); };
+$('safe').onclick = () => $('safe').classList.toggle('on', $('stage').classList.toggle('show-safe'));
+$('png').onclick = () => { const a = document.createElement('a'); a.download = `ewq-r008-f${String(frame).padStart(3,'0')}.png`; a.href = cv.toDataURL('image/png'); a.click(); };
+$('rec').onclick = async () => {
+  if (recording || !window.MediaRecorder) return;
+  recording = true; play(false); $('rec').textContent = 'Recording...';
+  const stream = cv.captureStream(0), track = stream.getVideoTracks()[0];
+  const mime = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'].find(m => MediaRecorder.isTypeSupported(m));
+  const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 16e6 }), chunks = [];
+  rec.ondataavailable = e => e.data.size && chunks.push(e.data);
+  const done = new Promise(r => rec.onstop = r);
+  rec.start();
+  const start = performance.now();
+  for (let f = 0; f < TOTAL; f++) {
+    frame = f; render(); track.requestFrame && track.requestFrame();
+    const wait = start + (f + 1) * 1000 / FPS - performance.now();
+    await new Promise(r => setTimeout(r, Math.max(0, wait)));
+  }
+  rec.stop(); await done;
+  const a = document.createElement('a'); a.download = 'eat-with-quinn-r008.webm';
+  a.href = URL.createObjectURL(new Blob(chunks, { type: 'video/webm' })); a.click();
+  recording = false; $('rec').textContent = 'Export WebM';
+};
+addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' && e.key !== ' ') return;
+  const n = e.shiftKey ? 10 : 1;
+  if (e.key === ' ') { e.preventDefault(); play(!playing); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); play(false); setFrame(frame + n); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); play(false); setFrame(frame - n); }
+  else if (e.key === 'Home') { play(false); setFrame(0); }
+});
+render(); requestAnimationFrame(tick);
+</script>
+</body>
+</html>
