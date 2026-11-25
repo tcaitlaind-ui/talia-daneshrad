@@ -1,0 +1,13 @@
+{
+  "name": "life-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal dashboard: Today, This Week, This Month. Local, single user.",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/dates.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "days": {},
+  "weeks": {},
+  "quarters": {},
+  "months": {},
+  "config": {
+    "projects": ["TRUFF", "Sasha's Roots", "Modern Dose", "Eat With Quinn", "The Citrus Creative"],
+    "plan": {
+      "exitTrigger": 11250,
+      "exitRunwayMonths": 6,
+      "baseline": { "month": "2026-11", "revenue": 8000, "retainers": 2, "quinnFollowers": 2890 },
+      "quarters": [
+        {
+          "label": "Y1 Q1 Set up", "start": "2026-11", "end": "2027-01",
+          "revenue": 9000, "quinnFollowers": 4500,
+          "onTrack": "$9K/month and 4,500 Quinn followers",
+          "focus": [
+            "Review pricing, package services, raise rates or add scope with 1 client",
+            "Kick off Sasha's Roots and Modern Dose in December",
+            "Quinn content calendar, 3 posts every week",
+            "Start a monthly tracker"
+          ]
+        },
+        {
+          "label": "Y1 Q2 Grow", "start": "2027-02", "end": "2027-04",
+          "revenue": 10000, "quinnFollowers": 6000,
+          "onTrack": "$10K/month and 6K followers",
+          "focus": [
+            "Land 1 new retainer through referrals or the website",
+            "Tighten onboarding and reporting",
+            "Poll the Quinn audience and test 3 offer ideas"
+          ]
+        },
+        {
+          "label": "Y1 Q3 Build", "start": "2027-05", "end": "2027-07",
+          "revenue": 11000, "quinnFollowers": 8000,
+          "onTrack": "$11K/month, 8K followers, first brand deal",
+          "focus": [
+            "Pick the Quinn offer based on what people wanted, build it and its sales page",
+            "Quinn media kit, pitch 5 brands",
+            "Write down which tasks a contractor could take on"
+          ]
+        },
+        {
+          "label": "Y1 Q4 Hit it", "start": "2027-08", "end": "2027-11",
+          "revenue": 12000, "quinnFollowers": 10000,
+          "onTrack": "$12K/month, 10K followers, first offering has sales",
+          "focus": [
+            "Launch the paid Quinn offering",
+            "Get recurring agency revenue to $12K/month",
+            "Review profit, set 2028 targets including the TRUFF exit date"
+          ]
+        }
+      ],
+      "years": [
+        { "label": "2027 Build the foundation", "checkpoint": "2027-11",
+          "revenue": 12000, "quinnFollowers": 10000, "team": 0 },
+        { "label": "2028 Go full-time", "checkpoint": "2028-11",
+          "revenue": 11250, "quinnFollowers": 20000, "quinnIncomeAnnual": 10000,
+          "annualRevenue": [150000, 175000], "ownerPayAnnual": 100000, "team": 1 },
+        { "label": "2029 Delegate", "checkpoint": "2029-11",
+          "revenue": 15000, "quinnFollowers": 30000, "quinnIncomeAnnual": 25000,
+          "annualRevenue": [175000, 200000], "ownerPayAnnual": 120000, "team": 2 },
+        { "label": "2030 Scale", "checkpoint": "2030-11",
+          "quinnFollowers": 40000, "quinnIncomeAnnual": 40000,
+          "annualRevenue": [190000, 225000], "ownerPayAnnual": 135000, "team": 3 },
+        { "label": "2031 Arrive", "checkpoint": "2031-11",
+          "quinnFollowers": 50000, "quinnFollowersStretch": 100000, "quinnIncomeAnnual": 50000,
+          "annualRevenue": [200000, 249000], "ownerPayAnnual": 150000, "team": 4 }
+      ]
+    }
+  }
+}

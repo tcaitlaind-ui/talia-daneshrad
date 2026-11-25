@@ -1,0 +1,97 @@
+/* Calm, legible, one accent. Laptop layout only. */
+:root {
+  --bg: #fafaf7;
+  --panel: #ffffff;
+  --ink: #3c1f0c;
+  --muted: #8a7a6d;
+  --line: #ebe5db;
+  --soft: #f5efe4;
+  --accent: #751a47;
+  --accent-tint: #f3e6ec;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans); }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.tabs { display: flex; gap: 4px; justify-content: center; padding: 28px 0 0; }
+.tab { border: 0; background: none; padding: 8px 18px; border-radius: 999px; cursor: pointer; color: var(--muted); }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+
+.main { max-width: 1040px; margin: 0 auto; padding: 40px 48px 96px; }
+.muted { color: var(--muted); }
+.save-error { max-width: 1040px; margin: 16px auto 0; padding: 10px 16px; background: var(--accent-tint); color: var(--accent); border-radius: 8px; }
+
+.view-head { margin-bottom: 32px; }
+.view-head h1 { font: 400 40px/1.15 var(--serif); margin: 0; }
+.view-head .sub { margin: 6px 0 0; color: var(--muted); font-size: 16px; }
+.view-head .sub b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+
+/* Add input + task lists */
+.add { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.add::placeholder { color: var(--muted); }
+.add:disabled { background: var(--soft); }
+.tasks { list-style: none; margin: 12px 0 0; padding: 0; }
+.task { display: flex; align-items: center; border-bottom: 1px solid var(--line); }
+.task:last-child { border-bottom: 0; }
+.task-toggle { flex: 1; display: flex; align-items: center; gap: 12px; text-align: left; background: none; border: 0; padding: 12px 4px; cursor: pointer; min-width: 0; }
+.task-toggle .box { flex: 0 0 18px; height: 18px; border: 1.5px solid var(--muted); border-radius: 50%; display: grid; place-items: center; }
+.task.done .box { background: var(--accent); border-color: var(--accent); }
+.task.done .box::after { content: ""; width: 5px; height: 9px; border: solid #fff; border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
+.task-text { overflow-wrap: anywhere; }
+.task.done .task-text { color: var(--muted); text-decoration: line-through; }
+.task-x { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 6px 10px; border-radius: 6px; opacity: 0; }
+.task:hover .task-x, .task-x:focus-visible { opacity: 1; }
+.task-x:hover { color: var(--accent); }
+.empty { color: var(--muted); padding: 12px 4px; margin: 0; }
+
+.today { max-width: 640px; }
+
+/* Week */
+.focus { background: var(--soft); border-radius: 14px; padding: 24px 28px; margin-bottom: 40px; }
+.focus h2 { font: 400 22px/1.3 var(--serif); margin: 0; }
+.focus .ontrack { margin: 4px 0 8px; color: var(--muted); }
+.projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+.card-head h3 { font: 400 20px/1.3 var(--serif); margin: 0; }
+.card-head span { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.card .add { padding: 9px 12px; }
+
+/* Month */
+.metrics { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 8px 28px; }
+.metric { display: grid; grid-template-columns: 1.3fr 1.2fr 1fr 150px 150px; align-items: center; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.metric:last-child { border-bottom: 0; }
+.metric-name { font-weight: 600; }
+.metric-basis { color: var(--muted); font-size: 13px; }
+.big { font: 400 44px/1.05 var(--serif); font-variant-numeric: tabular-nums lining-nums; letter-spacing: -.01em; }
+.big.empty-num { color: var(--line); }
+.change { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: 2px; }
+.target { color: var(--muted); font-variant-numeric: tabular-nums; }
+.target b { color: var(--ink); font-weight: 600; }
+.status { justify-self: start; font-size: 13px; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }
+.status.on { background: var(--accent); color: #fff; }
+.status.behind { border: 1px solid var(--ink); }
+.status.none, .status.missing { color: var(--muted); padding-left: 0; }
+.entry { display: grid; gap: 4px; font-size: 12px; color: var(--muted); }
+.num-input { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-variant-numeric: tabular-nums; text-align: right; }
+.num-input::-webkit-outer-spin-button, .num-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.num-input { -moz-appearance: textfield; }
+
+.runway { margin: 40px 0 48px; font: 400 26px/1.3 var(--serif); }
+.runway b { color: var(--accent); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+.history { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.history th { text-align: right; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 0 8px 10px; }
+.history th:first-child, .history td:first-child { text-align: left; white-space: nowrap; }
+.history td { padding: 4px 8px; border-top: 1px solid var(--line); }
+.history tr.current td:first-child { color: var(--accent); font-weight: 600; }
+.history .num-input { background: transparent; border-color: transparent; }
+.history .num-input:hover, .history .num-input:focus { border-color: var(--line); background: var(--panel); }
