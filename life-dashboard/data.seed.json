@@ -5,6 +5,12 @@
   "months": {},
   "config": {
     "projects": ["TRUFF", "Sasha's Roots", "Modern Dose", "Eat With Quinn", "The Citrus Creative"],
+    "todayCategories": [
+      { "name": "TRUFF", "limit": 3 },
+      { "name": "Quinn", "limit": 3 },
+      { "name": "Freelance", "limit": 3 }
+    ],
+    "calendarIcsUrl": "",
     "plan": {
       "exitTrigger": 11250,
       "exitRunwayMonths": 6,

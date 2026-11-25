@@ -3,6 +3,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const { getDayEvents } = require('./calendar.js');
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = __dirname;
@@ -36,6 +37,21 @@ function writeData(obj) {
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
+
+  // Today's events from the calendar's private iCal address (config.calendarIcsUrl).
+  if (url.pathname === '/api/calendar') {
+    const day = url.searchParams.get('day') || '';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return send(res, 400, 'Missing ?day=YYYY-MM-DD');
+    let icsUrl = '';
+    try { icsUrl = (JSON.parse(fs.readFileSync(DATA, 'utf8')).config || {}).calendarIcsUrl || ''; } catch (e) { /* treat as not set */ }
+    const json = (status, obj) => send(res, status, JSON.stringify(obj), TYPES['.json']);
+    if (!icsUrl) return json(200, { configured: false, events: [] });
+    if (!/^https:\/\//i.test(icsUrl)) return json(200, { configured: true, error: 'The calendar address has to start with https://', events: [] });
+    getDayEvents(icsUrl, day)
+      .then((events) => json(200, { configured: true, events }))
+      .catch((e) => json(200, { configured: true, error: e.message || "Couldn't reach the calendar.", events: [] }));
+    return;
+  }
 
   if (url.pathname === '/api/data') {
     if (req.method === 'GET') {

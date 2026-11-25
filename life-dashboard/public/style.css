@@ -52,7 +52,28 @@ button, input { font: inherit; color: inherit; }
 .task-x:hover { color: var(--accent); }
 .empty { color: var(--muted); padding: 12px 4px; margin: 0; }
 
-.today { max-width: 640px; }
+/* Today: calendar left, task categories right */
+.today-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 40px; align-items: start; }
+.card-head h2 { font: 400 20px/1.3 var(--serif); margin: 0; }
+.cats { display: grid; gap: 36px; }
+.cat .card-head { margin-bottom: 10px; }
+.cat .add { padding: 10px 12px; }
+.events { list-style: none; margin: 0; padding: 0; }
+.event { display: flex; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.event:last-child { border-bottom: 0; }
+.event-time { flex: 0 0 64px; color: var(--muted); font-size: 13px; padding-top: 1px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.event-title { min-width: 0; overflow-wrap: anywhere; }
+.event.past { opacity: .45; }
+.cal-setup { display: grid; gap: 12px; }
+.cal-setup p { margin: 0; }
+.steps { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; display: grid; gap: 2px; }
+.cal-actions { display: flex; gap: 8px; }
+.btn { border: 0; background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+.btn.ghost { background: none; color: var(--muted); border: 1px solid var(--line); }
+.link { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 13px; padding: 0; text-decoration: underline; }
+.link:hover { color: var(--accent); }
+.fine { font-size: 12px; color: var(--muted); }
+.cal-error { color: var(--accent); margin: 0; }
 
 /* Week */
 .focus { background: var(--soft); border-radius: 14px; padding: 24px 28px; margin-bottom: 40px; }

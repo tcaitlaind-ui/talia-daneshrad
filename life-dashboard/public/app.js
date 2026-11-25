@@ -52,13 +52,26 @@
   function commit() { save(); render(); }
 
   // ---------- rollover ----------
+  // Today's task categories and how many tasks each holds, from config.todayCategories.
+  function categories() {
+    if (!Array.isArray(data.config.todayCategories) || !data.config.todayCategories.length) {
+      data.config.todayCategories = [{ name: 'TRUFF', limit: 3 }, { name: 'Quinn', limit: 3 }, { name: 'Freelance', limit: 3 }];
+    }
+    return data.config.todayCategories;
+  }
   // A new day starts with yesterday's (most recent day's) unchecked tasks. Checked ones stay behind.
   function ensureToday() {
     const k = D.dayKey(now);
-    if (data.days[k]) return false;
-    const prev = D.prevKey(data.days, k);
-    data.days[k] = prev ? data.days[prev].filter((t) => !t.done).map((t) => ({ text: t.text, done: false })) : [];
-    return true;
+    let changed = false;
+    if (!data.days[k]) {
+      const prev = D.prevKey(data.days, k);
+      data.days[k] = prev ? data.days[prev].filter((t) => !t.done).map((t) => ({ text: t.text, done: false, category: t.category })) : [];
+      changed = true;
+    }
+    // Tasks from before categories existed go in the first category.
+    const names = categories().map((c) => c.name);
+    for (const t of data.days[k]) if (!names.includes(t.category)) { t.category = names[0]; changed = true; }
+    return changed;
   }
   // A new week (Monday) starts with last week's unchecked items, per project.
   function ensureWeek() {
@@ -77,7 +90,8 @@
     return changed;
   }
   function rollover() {
-    const a = ensureToday();
+    const hadCats = Array.isArray(data.config.todayCategories);
+    const a = ensureToday() || !hadCats;
     const b = ensureWeek();
     if (a || b) save();
   }
@@ -95,25 +109,90 @@
       }
     });
   }
-  function taskList(tasks, emptyText) {
-    if (!tasks.length) return h('p', { class: 'empty', text: emptyText });
-    return h('ul', { class: 'tasks' }, tasks.map((t, i) => h('li', { class: 'task' + (t.done ? ' done' : '') },
+  // `owner` is the array the items live in (items may be a filtered view of it).
+  function taskList(items, emptyText, owner = items) {
+    if (!items.length) return h('p', { class: 'empty', text: emptyText });
+    return h('ul', { class: 'tasks' }, items.map((t) => h('li', { class: 'task' + (t.done ? ' done' : '') },
       h('button', { class: 'task-toggle', type: 'button', 'aria-pressed': String(!!t.done), onclick: () => { t.done = !t.done; commit(); } },
         h('span', { class: 'box', 'aria-hidden': 'true' }), h('span', { class: 'task-text', text: t.text })),
-      h('button', { class: 'task-x', type: 'button', 'aria-label': `Delete "${t.text}"`, text: '×', onclick: () => { tasks.splice(i, 1); commit(); } })
+      h('button', { class: 'task-x', type: 'button', 'aria-label': `Delete "${t.text}"`, text: '×', onclick: () => { const i = owner.indexOf(t); if (i >= 0) owner.splice(i, 1); commit(); } })
     )));
+  }
+
+  // ---------- Calendar (today only, read-only) ----------
+  const cal = { day: null, at: 0, loading: false, result: null, editing: false };
+  function loadCalendar(force) {
+    const day = D.dayKey(now);
+    if (cal.loading) return;
+    if (!force && cal.day === day && Date.now() - cal.at < 5 * 60 * 1000) return;
+    cal.loading = true;
+    saving.then(() => fetch('/api/calendar?day=' + day)).then((r) => r.json())
+      .then((res) => { cal.result = res; })
+      .catch(() => { cal.result = { configured: true, error: "Couldn't reach the server.", events: [] }; })
+      .finally(() => { cal.loading = false; cal.day = day; cal.at = Date.now(); if (view === 'today') render(); });
+  }
+  function calendarSetup() {
+    const saveUrl = () => {
+      const el = document.getElementById('cal-url');
+      const v = (el && el.value || '').trim();
+      if (v && !/^https:\/\//i.test(v)) { el.setCustomValidity('Paste the address that starts with https://'); el.reportValidity(); return; }
+      if (v) data.config.calendarIcsUrl = v; else delete data.config.calendarIcsUrl;
+      cal.editing = false; cal.result = null; save(); render(); loadCalendar(true);
+    };
+    return h('div', { class: 'cal-setup' },
+      h('p', { class: 'muted', text: "Paste your Google Calendar's secret iCal address to see today's events here." }),
+      h('ol', { class: 'steps' },
+        h('li', { text: 'Google Calendar on the web, Settings (gear icon)' }),
+        h('li', { text: 'Under "Settings for my calendars", click your calendar' }),
+        h('li', { text: 'Integrate calendar, copy "Secret address in iCal format"' })),
+      h('input', {
+        class: 'add', id: 'cal-url', type: 'url', placeholder: 'https://calendar.google.com/calendar/ical/…/basic.ics', autocomplete: 'off',
+        'aria-label': 'Secret iCal address', value: data.config.calendarIcsUrl || '',
+        oninput: (e) => e.target.setCustomValidity(''), onkeydown: (e) => { if (e.key === 'Enter') saveUrl(); }
+      }),
+      h('div', { class: 'cal-actions' },
+        h('button', { class: 'btn', type: 'button', text: 'Save', onclick: saveUrl }),
+        data.config.calendarIcsUrl ? h('button', { class: 'btn ghost', type: 'button', text: 'Cancel', onclick: () => { cal.editing = false; render(); } }) : null),
+      h('p', { class: 'fine', text: 'The address stays in data.json on this computer. Read-only.' }));
+  }
+  function renderCalendar() {
+    loadCalendar(false);
+    const res = cal.result;
+    const head = h('div', { class: 'card-head' }, h('h2', { text: 'Calendar' }),
+      data.config.calendarIcsUrl && !cal.editing ? h('button', { class: 'link', type: 'button', text: 'Change', onclick: () => { cal.editing = true; render(); } }) : null);
+    let body;
+    if (cal.editing || (res && !res.configured) || (!res && !data.config.calendarIcsUrl)) body = calendarSetup();
+    else if (!res || (cal.loading && cal.day !== D.dayKey(now))) body = h('p', { class: 'empty', text: 'Loading today…' });
+    else if (res.error) body = h('p', { class: 'cal-error', text: res.error });
+    else if (!res.events.length) body = h('p', { class: 'empty', text: 'Nothing on the calendar today.' });
+    else {
+      const nowMs = Date.now();
+      const time = (e) => (e.allDay ? 'All day' : new Date(e.start).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }));
+      body = h('ul', { class: 'events' }, res.events.map((e) => h('li', { class: 'event' + (!e.allDay && new Date(e.end) < nowMs ? ' past' : '') },
+        h('span', { class: 'event-time', text: time(e) }), h('span', { class: 'event-title', text: e.title }))));
+    }
+    return h('section', { class: 'card cal-card' }, head, body);
   }
 
   // ---------- Today ----------
   function renderToday() {
     const tasks = data.days[D.dayKey(now)];
     const done = tasks.filter((t) => t.done).length;
-    return h('section', { class: 'today' },
+    const groups = categories().map((c) => {
+      const items = tasks.filter((t) => t.category === c.name);
+      const limit = Number.isFinite(+c.limit) && +c.limit > 0 ? +c.limit : Infinity;
+      const full = items.length >= limit;
+      return h('section', { class: 'cat' },
+        h('div', { class: 'card-head' }, h('h2', { text: c.name }), h('span', { text: `${items.filter((t) => t.done).length} of ${items.length}` })),
+        addInput('add-cat-' + slug(c.name), full ? `${limit} tasks, that's today` : 'Add a task and press Enter',
+          (text) => { if (items.length < limit) { tasks.push({ text, done: false, category: c.name }); commit(); } }, full),
+        taskList(items, 'Nothing here yet.', tasks));
+    });
+    return h('section', {},
       h('header', { class: 'view-head' },
         h('h1', { text: now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) }),
         h('p', { class: 'sub' }, h('b', { text: done }), ' of ', h('b', { text: tasks.length }), ' done')),
-      addInput('add-today', 'Add a task and press Enter', (text) => { tasks.push({ text, done: false }); commit(); }),
-      taskList(tasks, 'Nothing on the list yet.'));
+      h('div', { class: 'today-grid' }, renderCalendar(), h('div', { class: 'cats' }, groups)));
   }
 
   // ---------- This Week ----------
@@ -279,6 +358,7 @@
   function tick() {
     const n = new Date();
     if (D.dayKey(n) !== D.dayKey(now)) { now = n; rollover(); render(); } else now = n;
+    if (view === 'today') loadCalendar(false);
   }
   setInterval(tick, 60 * 1000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
